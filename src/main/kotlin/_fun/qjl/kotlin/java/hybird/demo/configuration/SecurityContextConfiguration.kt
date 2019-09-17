@@ -2,7 +2,7 @@ package _fun.qjl.kotlin.java.hybird.demo.configuration
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
 import org.springframework.security.core.userdetails.User
@@ -12,7 +12,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 
 
 @Configuration
-@EnableWebSecurity
+@EnableWebFluxSecurity
 class SecurityContextConfiguration {
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -32,9 +32,9 @@ class SecurityContextConfiguration {
 
     @Bean
     fun securityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
-        return http
+        http
                 .authorizeExchange().anyExchange().permitAll()
-                .and()
-                .build()
+
+        return http.build()
     }
 }
